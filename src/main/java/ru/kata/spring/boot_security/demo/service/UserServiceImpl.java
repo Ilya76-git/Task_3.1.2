@@ -12,7 +12,9 @@ import ru.kata.spring.boot_security.demo.model.User;
 import ru.kata.spring.boot_security.demo.repository.UserRepository;
 
 import java.util.Collections;
+import java.util.LinkedHashSet;
 import java.util.List;
+import java.util.Set;
 
 @Service
 public class UserServiceImpl implements UserDetailsService,UserService {
@@ -36,7 +38,14 @@ public class UserServiceImpl implements UserDetailsService,UserService {
 
     @Override
     public void createUser(User user) {
-        user.setRoles(Collections.singleton(new Role(1L, "ROLE_USER")));
+        if(user.getRole().equals("ADMIN")){
+            Set<Role> roleSet = new LinkedHashSet<>();
+            roleSet.add(new Role(1L, "ROLE_USER"));
+            roleSet.add(new Role(2L, "ROLE_ADMIN"));
+            user.setRoles(roleSet);
+        } else {
+            user.setRoles(Collections.singleton(new Role(1L, "ROLE_USER")));
+        }
         user.setPassword("{noop}" + user.getPassword());
         userRepository.save(user);
     }
@@ -53,6 +62,6 @@ public class UserServiceImpl implements UserDetailsService,UserService {
 
     @Override
     public void updateUser(User user) {
-        userRepository.save(user);
+        createUser(user);
     }
 }

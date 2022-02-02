@@ -16,6 +16,9 @@
             <p>Password</p>
             <input type="password" th:field="*{password}">
         </div>
+        <div>
+            <input type="hidden" name="role" value="..." th:value="'USER'">
+        </div>
         <button type="submit">Зарегистрироваться</button>
     </form>
     <a href="/">Главная</a>

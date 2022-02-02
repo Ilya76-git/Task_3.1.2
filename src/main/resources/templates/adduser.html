@@ -11,6 +11,11 @@
     <label for="password">password</label>
     <input type="text" name="password" id="password">
     <input type="submit" value="Add user">
+    <label for="role">Role</label>
+    <select multiple class="form-control" id="role" name="role" value="">
+        <option th:value="'USER'" th:text="USER"></option>
+        <option th:value="'ADMIN'" th:text="ADMIN"></option>
+    </select>
 </form>
 </body>
 </html>
